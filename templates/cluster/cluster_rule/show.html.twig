@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClusterRule{% endblock %}
+
+{% block body %}
+    <h1>ClusterRule</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Cluster</th>
+                <td>{{ cluster_rule.cluster }}</td>
+            </tr>
+            <tr>
+                <th>FinalCpB2cMin</th>
+                <td>{{ cluster_rule.finalCpB2cMin }}</td>
+            </tr>
+            <tr>
+                <th>FinalCpB2c</th>
+                <td>{{ cluster_rule.finalCpB2c }}</td>
+            </tr>
+            <tr>
+                <th>FinalBpB2cMax</th>
+                <td>{{ cluster_rule.finalBpB2cMax }}</td>
+            </tr>
+            <tr>
+                <th>FinalCpB2CMax</th>
+                <td>{{ cluster_rule.finalCpB2CMax }}</td>
+            </tr>
+            <tr>
+                <th>FinalBpB2cMin</th>
+                <td>{{ cluster_rule.finalBpB2cMin }}</td>
+            </tr>
+            <tr>
+                <th>FinalBpB2c</th>
+                <td>{{ cluster_rule.finalBpB2c }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_cluster_rule_index') }}">back to list</a>
+
+    <a href="{{ path('admin_cluster_rule_edit', {'cluster': cluster_rule.cluster}) }}">edit</a>
+
+    {{ include('cluster/cluster_rule/_delete_form.html.twig') }}
+{% endblock %}

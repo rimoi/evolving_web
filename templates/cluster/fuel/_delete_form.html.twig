@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('admin_cluster_fuel_delete', {'carburantId': fuel.carburantId}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fuel.carburantId) }}">
+    <button class="btn">Delete</button>
+</form>

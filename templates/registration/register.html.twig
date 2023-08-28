@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création de compte{% endblock %}
+{% block body_class 'register-page' %}
+
+{% block body %}
+
+    <div class="register-box">
+        <div class="register-logo">
+            <b>Sidi -</b>TEST
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Créer votre compte</p>
+
+                    {{ form_start(registrationForm) }}
+
+                    <div class="input-group mb-3">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                    <div class="input-group mb-3">
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: false
+                        }) }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-success">Créer</button>
+                        </div>
+                        <div class="col-4">
+                            <a href="{{ path('app_login') }}" class="btn">Connexion</a>
+                        </div>
+                    </div>
+                {{ form_end(registrationForm) }}
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+
+{% endblock %}

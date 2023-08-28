@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fuel{% endblock %}
+
+{% block body %}
+    <h1>Fuel</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>CarburantId</th>
+                <td>{{ fuel.carburantId }}</td>
+            </tr>
+            <tr>
+                <th>CarburantCorrected</th>
+                <td>{{ fuel.carburantCorrected }}</td>
+            </tr>
+            <tr>
+                <th>CarburantClass</th>
+                <td>{{ fuel.carburantClass }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_cluster_fuel_index') }}">back to list</a>
+
+    <a href="{{ path('admin_cluster_fuel_edit', {'carburantId': fuel.carburantId}) }}">edit</a>
+
+    {{ include('cluster/fuel/_delete_form.html.twig') }}
+{% endblock %}
