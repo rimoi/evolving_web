@@ -9,7 +9,7 @@ The purpose of this project is to address a specific problem scenario. Imagine a
 - Fuel
 - Segments
 
-These files are located at the root of the project in the `Data` folder.
+These files are located at the root of the project in the [Data](https://github.com/rimoi/evolving_web/tree/master/Data) folder.
 
 ## Technical stack
 This project has been created with the following technologies :
@@ -23,10 +23,13 @@ This project has been created with the following technologies :
 
 ### To Install the Project
 ```bash
-git clone 
+git clone https://github.com/rimoi/evolving_web project_evolving
 ```
 
 ```bash
+# Enter the 'project_evolving' folder generate with the previous command
+cd project_evolving/ 
+
 # Install dependencies
 composer install 
 
@@ -67,3 +70,50 @@ bin/console app:import-cluster
 ```
 
 Now, return to the dashboard, and you should have more data 😉
+
+---
+
+# What do we learn from this code?
+> Clean code implies modular code, code that can evolve.
+
+Let's take a look at the following two files:  
+- [src/Service/Clusterisation/ClusterisationInterface.php](https://github.com/rimoi/evolving_web/blob/master/src/Service/Clusterisation/ClusterisationInterface.php)
+- [src/Command/ImportClusterCommand.php](https://github.com/rimoi/evolving_web/blob/master/src/Command/ImportClusterCommand.php)
+
+There are some important points to note. In the `ClusterisationInterface` file, we have added the `app.clustorisation_rules` tag to our interface:
+
+```PHP
+#[AutoconfigureTag('app.clustorisation_rules')]
+interface ClusterisationInterface
+{
+    //...
+}
+```
+This means that all services implementing this interface will be tagged with the `app.clustorisation_rules` tag.
+
+Now, if we look at the constructor of `ImportClusterCommand`, we have the following:
+```PHP
+class ImportClusterCommand extends Command
+{
+    public function __construct(
+        #[TaggedIterator('app.clustorisation_rules')]
+        private iterable $clusterisationRules
+    ) {
+        parent::__construct(null);
+    }
+    
+    // ...other code
+}
+```
+This implies that the `$clusterisationRules` variable will receive all services that implement the `ClusterisationInterface`. This allows us to iterate over them and execute the execute function (line [37](https://github.com/rimoi/evolving_web/blob/master/src/Command/ImportClusterCommand.php#L37C38-L37C45))
+which loads the entity from a CSV file.
+
+What's great about all this is that if we want to add a new entity, we just need to follow these steps:
+
+- Create the new entity
+- Add the CSV file to be loaded in the [Data](https://github.com/rimoi/evolving_web/tree/master/Data) folder
+- Create a service in the [src/Service/Clusterisation](https://github.com/rimoi/evolving_web/tree/master/src/Service/Clusterisation) directory that handles the file upload and implements the `ClusterisationInterface` contract
+  And we don't need to change the logic in the ImportClusterCommand file at all.
+
+**Note:** I have created an abstract class [AbstractClusterisation](https://github.com/rimoi/evolving_web/blob/master/src/Service/Clusterisation/AbstractClusterisation.php) that implements the  `ClusterisationInterface`
+interface in order to factorize common code used by different subclasses. So, if you wish to implement the `ClusterisationInterface`, you should implement the abstract class [AbstractClusterisation](https://github.com/rimoi/evolving_web/blob/master/src/Service/Clusterisation/AbstractClusterisation.php).
