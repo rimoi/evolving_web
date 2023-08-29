@@ -113,7 +113,11 @@ What's great about all this is that if we want to add a new entity, we just need
 - Create the new entity
 - Add the CSV file to be loaded in the [Data](https://github.com/rimoi/evolving_web/tree/master/Data) folder
 - Create a service in the [src/Service/Clusterisation](https://github.com/rimoi/evolving_web/tree/master/src/Service/Clusterisation) directory that handles the file upload and implements the `ClusterisationInterface` contract
-  And we don't need to change the logic in the ImportClusterCommand file at all.
+  And we don't need to change the logic in the `ImportClusterCommand` file at all.
 
 **Note:** I have created an abstract class [AbstractClusterisation](https://github.com/rimoi/evolving_web/blob/master/src/Service/Clusterisation/AbstractClusterisation.php) that implements the  `ClusterisationInterface`
 interface in order to factorize common code used by different subclasses. So, if you wish to implement the `ClusterisationInterface`, you should implement the abstract class [AbstractClusterisation](https://github.com/rimoi/evolving_web/blob/master/src/Service/Clusterisation/AbstractClusterisation.php).
+
+
+## Conclusion : 
+The advantage of this approach is that we have modular code. When we want to add the same logic for a new entity, we don't need to change the abstraction. Similarly, when we want to remove an entity, it doesn't require modifying the abstraction.
