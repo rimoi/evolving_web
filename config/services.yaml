@@ -6,6 +6,7 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+       # The $ruleClusterDir variable will be available anywhere in the contructeur of service or controller Action
         bind:
             $ruleClusterDir: '%kernel.project_dir%/Data'
 
